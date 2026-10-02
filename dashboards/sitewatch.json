@@ -1,0 +1,27 @@
+{
+  "title": "sitewatch",
+  "uid": "sitewatch",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": {"from": "now-6h", "to": "now"},
+  "templating": {"list": [
+    {"name": "target", "type": "query", "datasource": "Prometheus", "query": "label_values(sitewatch_up, target)", "includeAll": true, "multi": true, "current": {"text": "All", "value": "$__all"}}
+  ]},
+  "panels": [
+    {"id": 1, "type": "stat", "title": "Up", "gridPos": {"x": 0, "y": 0, "w": 6, "h": 5},
+     "targets": [{"expr": "sitewatch_up{target=~\"$target\"}", "legendFormat": "{{target}}"}],
+     "fieldConfig": {"defaults": {"mappings": [{"type": "value", "options": {"0": {"text": "DOWN", "color": "red"}, "1": {"text": "UP", "color": "green"}}}]}}},
+    {"id": 2, "type": "timeseries", "title": "Response time", "gridPos": {"x": 6, "y": 0, "w": 18, "h": 8},
+     "targets": [{"expr": "sitewatch_response_seconds{target=~\"$target\"}", "legendFormat": "{{target}}"}],
+     "fieldConfig": {"defaults": {"unit": "s"}}},
+    {"id": 3, "type": "timeseries", "title": "Time to first byte", "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+     "targets": [{"expr": "sitewatch_time_to_first_byte_seconds{target=~\"$target\"}", "legendFormat": "{{target}}"}],
+     "fieldConfig": {"defaults": {"unit": "s"}}},
+    {"id": 4, "type": "bargauge", "title": "Certificate days left", "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+     "targets": [{"expr": "sitewatch_tls_cert_expiry_days{target=~\"$target\"}", "legendFormat": "{{target}}"}],
+     "fieldConfig": {"defaults": {"unit": "d", "thresholds": {"mode": "absolute", "steps": [{"color": "red", "value": null}, {"color": "orange", "value": 7}, {"color": "green", "value": 21}]}}}},
+    {"id": 5, "type": "timeseries", "title": "Failures per hour", "gridPos": {"x": 0, "y": 16, "w": 24, "h": 7},
+     "targets": [{"expr": "increase(sitewatch_checks_total{target=~\"$target\",outcome=\"failure\"}[1h])", "legendFormat": "{{target}}"}]}
+  ]
+}

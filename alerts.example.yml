@@ -1,0 +1,21 @@
+groups:
+  - name: sitewatch
+    rules:
+      - alert: SiteDown
+        expr: sitewatch_up == 0
+        for: 2m
+        labels: {severity: page}
+        annotations:
+          summary: "{{ $labels.target }} has failed its checks for 2 minutes"
+      - alert: CertificateExpiresSoon
+        expr: sitewatch_tls_cert_expiry_days < 14
+        for: 10m
+        labels: {severity: ticket}
+        annotations:
+          summary: "The certificate of {{ $labels.target }} expires in {{ $value | humanize }} days"
+      - alert: SiteSlow
+        expr: sitewatch_time_to_first_byte_seconds > 2
+        for: 10m
+        labels: {severity: ticket}
+        annotations:
+          summary: "{{ $labels.target }} takes more than 2 s to start answering"

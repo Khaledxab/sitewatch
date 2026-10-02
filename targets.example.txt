@@ -1,0 +1,3 @@
+# one URL per line, a bare host means https
+khaledxab.com
+https://hesabi.tn

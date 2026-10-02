@@ -1,0 +1,24 @@
+image:
+  repository: ghcr.io/khaledxab/sitewatch
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+interval: 30s
+timeout: 10s
+
+# Sites to watch, one per line in the generated ConfigMap.
+targets:
+  - khaledxab.com
+  - hesabi.tn
+
+service:
+  port: 9115
+
+# Create a ServiceMonitor when the Prometheus Operator is installed.
+serviceMonitor:
+  enabled: false
+  interval: 30s
+
+resources:
+  requests: {cpu: 10m, memory: 16Mi}
+  limits: {memory: 64Mi}

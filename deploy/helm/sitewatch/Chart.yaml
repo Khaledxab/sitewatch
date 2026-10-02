@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sitewatch
+description: Probe websites and expose uptime, latency and certificate expiry to Prometheus
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
