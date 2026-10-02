@@ -13,13 +13,13 @@ I wrote it because I run production sites for clients and wanted the three thing
 
 ```sh
 go build -o sitewatch .
-./sitewatch check khaledxab.com example.com
+./sitewatch check khaledxab.com hesabi.tn
 ```
 
 ```
 TARGET                  STATUS  TOTAL  TTFB   CERT DAYS  NOTE
 https://khaledxab.com   200     234ms  234ms  75
-https://example.com     200     118ms  118ms  41
+https://hesabi.tn       200     339ms  339ms  53
 ```
 
 `check` exits with code 1 when any target is down, so it also works in a cron job or a CI step.
